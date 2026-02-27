@@ -1,0 +1,29 @@
+# llms.txt - YouTube Transcript Extractor
+
+## Description
+Free online tool to extract transcripts, subtitles and captions from any YouTube video. 
+No software installation, no signup required. Works instantly in your browser.
+
+## URL
+https://yttranscript.io
+
+## Features
+- Extract YouTube transcripts instantly
+- Copy subtitles without timestamps
+- Download as TXT, DOC, or PDF
+- Support multiple languages
+- 100% free, no registration
+- Works on mobile and desktop
+
+## Use Cases
+- Students: Extract lecture transcripts for note-taking
+- Journalists: Quote video interviews accurately
+- Researchers: Archive video content as text
+- Content Creators: Repurpose video content
+- Language Learners: Study video dialogues
+
+## Contact
+support@yttranscript.io
+
+## Language
+English (primary), French, Spanish, German available
