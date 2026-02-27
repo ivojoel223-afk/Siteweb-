@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Extract YouTube transcripts online for free. Download subtitles, captions and text without software. No signup required.">
-    <title>YouTube Transcript Extractor | Free Online Tool</title>
+    <meta name="description" content="Extract YouTube transcripts in seconds. Free online tool to copy subtitles, remove timestamps, and download as TXT or DOC. No signup required.">
+    <meta name="keywords" content="youtube transcript extractor, copy youtube subtitles, remove timestamps, youtube to text, free transcript tool">
+    <meta name="author" content="NoTimeSub">
+    <meta property="og:title" content="NoTimeSub - Free YouTube Transcript Extractor">
+    <meta property="og:description" content="Extract and clean YouTube transcripts instantly. Download as TXT or DOC.">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>NoTimeSub | Free YouTube Transcript Extractor (No Timestamps)</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
     <style>
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --primary: #667eea; --secondary: #764ba2; --accent: #FF6B6B; }
         body {
@@ -13,8 +31,9 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #333;
         }
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; animation: fadeIn 0.6s ease; }
         header { text-align: center; color: white; margin-bottom: 30px; padding: 20px 0; }
         h1 { font-size: 2.5rem; margin-bottom: 10px; }
         .subtitle { opacity: 0.9; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
@@ -56,6 +75,15 @@
         button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); }
         button:disabled { opacity: 0.6; cursor: not-allowed; }
         
+        .magic-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%) !important;
+            font-weight: 700 !important;
+            font-size: 15px !important;
+        }
+        .magic-btn:hover {
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4) !important;
+        }
+        
         .language-section { margin-bottom: 25px; }
         .lang-label { font-size: 0.9rem; color: #666; margin-bottom: 12px; }
         .language-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -75,12 +103,8 @@
             border-color: transparent;
         }
         
-        .result-section {
-            display: none;
-            margin-top: 25px;
-        }
+        .result-section { display: none; margin-top: 25px; animation: fadeIn 0.4s ease; }
         .result-section.active { display: block; }
-        
         .transcript-box {
             width: 100%;
             min-height: 300px;
@@ -92,30 +116,15 @@
             resize: vertical;
             background: #f8f9fa;
         }
-        
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        .actions button {
-            padding: 10px 20px;
-            font-size: 14px;
-        }
+        .actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .actions button { padding: 12px 24px; font-size: 14px; }
         .actions .btn-secondary {
             background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
         }
         .actions .btn-success {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
-        
-        .stats {
-            display: flex;
-            gap: 20px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
+        .stats { display: flex; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
         .stat-item {
             background: #f8f9fa;
             padding: 10px 20px;
@@ -123,52 +132,123 @@
             font-size: 14px;
         }
         .stat-item strong { color: var(--primary); }
-        
-        .error { color: var(--accent); margin-top: 10px; }
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
+        .error { color: var(--accent); margin-top: 10px; padding: 10px; background: #ffe6e6; border-radius: 8px; }
+        .loading { display: none; text-align: center; padding: 30px; color: #666; }
         .loading.active { display: block; }
         
-        footer { text-align: center; color: white; padding: 20px; }
+        /* SEO Content Section */
+        .seo-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            padding: 40px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+        .seo-content h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .seo-content h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .seo-content p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .seo-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .seo-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        footer { 
+            text-align: center; 
+            color: white; 
+            padding: 30px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
         
         @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .main-card { padding: 25px; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .main-card, .seo-content { padding: 25px; }
             input[type="text"] { min-width: 100%; }
+            .actions button { width: 100%; }
         }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "NoTimeSub - YouTube Transcript Extractor",
+        "description": "Free online tool to extract YouTube transcripts and remove timestamps",
+        "url": "https://youtube-transcript-ox8n.onrender.com",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎥 YouTube Transcript Extractor</h1>
-            <p class="subtitle">Extract subtitles and transcripts from any YouTube video instantly. Free, no signup required.</p>
+            <h1>📝 NoTimeSub</h1>
+            <p class="subtitle">Extract YouTube transcripts in seconds. Free tool to copy subtitles and remove timestamps instantly.</p>
         </header>
         
         <div class="main-card">
             <div class="input-section">
                 <label>🔗 Paste YouTube URL</label>
                 <div class="input-wrapper">
-                    <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
-                    <button id="extractBtn" onclick="extractTranscript()">Extract Transcript</button>
+                    <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/...">
+                    <button id="extractBtn" onclick="extractTranscript()">🎬 Extract Transcript</button>
                 </div>
             </div>
             
             <div class="language-section">
-                <div class="lang-label">🌐 Language of the video transcription</div>
+                <div class="lang-label">🌐 Choose transcription language:</div>
                 <div class="language-buttons">
-                    <button class="lang-btn active" onclick="setLanguage('fr')" data-lang="fr">🇫🇷 FR</button>
-                    <button class="lang-btn" onclick="setLanguage('en')" data-lang="en">🇬🇧 EN</button>
-                    <button class="lang-btn" onclick="setLanguage('es')" data-lang="es">🇪🇸 ES</button>
+                    <button class="lang-btn active" onclick="setLanguage('fr')" data-lang="fr">🇫🇷 French</button>
+                    <button class="lang-btn" onclick="setLanguage('en')" data-lang="en">🇬🇧 English</button>
+                    <button class="lang-btn" onclick="setLanguage('es')" data-lang="es">🇪🇸 Spanish</button>
                 </div>
             </div>
             
             <div class="loading" id="loading">
-                ⏳ Extraction en cours... Veuillez patienter (2-5 secondes)
+                ⏳ Extracting transcript... Please wait (2-5 seconds)
             </div>
             
             <div class="result-section" id="resultSection">
@@ -176,24 +256,45 @@
                 <textarea id="transcriptOutput" class="transcript-box" readonly></textarea>
                 
                 <div class="stats" id="stats">
-                    <div class="stat-item">Words: <strong id="wordCount">0</strong></div>
-                    <div class="stat-item">Chars: <strong id="charCount">0</strong></div>
-                    <div class="stat-item">Duration: <strong id="duration">0s</strong></div>
+                    <div class="stat-item">📝 Words: <strong id="wordCount">0</strong></div>
+                    <div class="stat-item">🔤 Chars: <strong id="charCount">0</strong></div>
+                    <div class="stat-item">⏱️ Duration: <strong id="duration">0s</strong></div>
                 </div>
                 
                 <div class="actions">
-                    <button onclick="copyText()">📋 Copy</button>
-                    <button class="btn-secondary" onclick="downloadText()">💾 Download TXT</button>
-                    <button class="btn-success" onclick="downloadDoc()">📄 Download DOC</button>
-                    <button class="btn-secondary" onclick="getCleanText()">🧹 Clean (No timestamps)</button>
+                    <button onclick="copyText()" title="Copy to clipboard">📋 Copy</button>
+                    <button class="btn-secondary" onclick="downloadText()" title="Download as TXT">💾 Download TXT</button>
+                    <button class="btn-success" onclick="downloadDoc()" title="Download as DOC">📄 Download DOC</button>
+                    <button class="magic-btn" onclick="getCleanText()" title="Remove timestamps and filler words for ChatGPT">✨ Magic Clean (for ChatGPT)</button>
                 </div>
                 
                 <div class="error" id="errorMsg"></div>
             </div>
         </div>
         
-        <footer>
-            <p>© 2026 YouTube Transcript Extractor - Free Online Tool</p>
-        </footer>
-    </div>
-
+        <!-- SEO Content Section -->
+        <div class="seo-content">
+            <h2>📚 Free YouTube Transcript Extractor - Complete Guide</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How to extract YouTube transcript without timestamps?</div>
+                <p><strong>NoTimeSub</strong> is the easiest solution. Simply paste your YouTube URL, click "Extract Transcript", then click the "✨ Magic Clean" button. This instantly removes all timestamps like [00:12], deletes filler words ("um", "uh", "you know"), and formats the text into clean paragraphs ready for ChatGPT, Word, or any document.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a free YouTube to text converter for AI?</div>
+                <p>Yes! NoTimeSub is completely free with no signup required. Unlike other tools that ask for your email or impose daily limits, our YouTube transcript extractor gives you unlimited access. Perfect for students, researchers, content creators, and AI enthusiasts who need clean text data for training models or analysis.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How to export YouTube subtitles to Word for free?</div>
+                <p>Copy your YouTube video link, paste it into NoTimeSub, extract the transcript, and click "📄 Download DOC". Your transcript will be saved as a Word-compatible document (.doc format) that opens in Microsoft Word, Google Docs, or LibreOffice. No installation needed - it works directly in your browser.</p>
+            </div>
+            
+            <h3>Why Choose NoTimeSub Over Competitors?</h3>
+            <ul>
+                <li><strong>🚫 No Timestamps:</strong> Unlike DownSub and YouTubeTranscript.com, we offer one-click timestamp removal</li>
+                <li><strong>🧹 Magic Clean:</strong> Unique feature that removes filler words and formats text for AI tools</li>
+                <li><strong>💯 100% Free:</strong> No registration, no email required, no daily limits</li>
+                <li><strong>📱 Mobile Friendly:</strong> Works perfectly on phones and tablets</li>
+                <li><
