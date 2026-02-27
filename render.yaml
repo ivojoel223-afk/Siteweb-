@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: youtube-transcript-api
+    env: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r api/requirements.txt
+    startCommand: cd api && gunicorn app:app --bind 0.0.0.0:$PORT
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+
+  - type: static
+    name: youtube-transcript
+    plan: free
+    region: frankfurt
+    buildCommand: echo "Frontend ready"
+    publishPath: ./public
+    autoDeploy: true
