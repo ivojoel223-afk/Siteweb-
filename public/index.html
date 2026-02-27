@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Extract YouTube transcripts online for free. Download subtitles, captions and text without software. No signup required. Export to PDF, Word, TXT.">
-    <meta name="keywords" content="youtube transcript extractor free, extract youtube subtitles, youtube to text converter online, download youtube transcript txt, copy youtube subtitles without timestamp">
+    <meta name="description" content="Extract YouTube transcripts online for free. Download subtitles, captions and text without software. No signup required.">
     <title>YouTube Transcript Extractor | Free Online Tool</title>
-    <link rel="canonical" href="https://yttranscript.io/">
-    <link rel="llms" href="/llms.txt">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --primary: #667eea; --secondary: #764ba2; --accent: #FF6B6B; }
@@ -19,8 +16,8 @@
         }
         .container { max-width: 900px; margin: 0 auto; }
         header { text-align: center; color: white; margin-bottom: 30px; padding: 20px 0; }
-        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; }
-        .subtitle { opacity: 0.9; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .subtitle { opacity: 0.9; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
         .main-card {
             background: white;
             border-radius: 20px;
@@ -29,7 +26,7 @@
             margin-bottom: 20px;
         }
         .input-section { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 10px; font-weight: 600; color: #333; font-size: 1rem; }
+        label { display: block; margin-bottom: 10px; font-weight: 600; color: #333; }
         .input-wrapper { display: flex; gap: 10px; flex-wrap: wrap; }
         input[type="text"] {
             flex: 1;
@@ -56,27 +53,12 @@
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
         
-        /* Language Buttons */
-        .language-section { margin-bottom: 30px; }
-        .lang-label { 
-            font-size: 0.9rem; 
-            color: #666; 
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .lang-label::before { content: "🌐"; }
-        .language-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+        .language-section { margin-bottom: 25px; }
+        .lang-label { font-size: 0.9rem; color: #666; margin-bottom: 12px; }
+        .language-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
         .lang-btn {
             padding: 12px 28px;
             border: 2px solid #e0e0e0;
@@ -84,69 +66,79 @@
             background: white;
             color: #333;
             font-weight: 600;
-            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .lang-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
         }
         .lang-btn.active {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border-color: transparent;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
         }
         
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+        .result-section {
+            display: none;
+            margin-top: 25px;
         }
-        .feature {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            padding: 15px;
-            background: #f8f9fa;
+        .result-section.active { display: block; }
+        
+        .transcript-box {
+            width: 100%;
+            min-height: 300px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
             border-radius: 12px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            resize: vertical;
+            background: #f8f9fa;
         }
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 10px;
+        
+        .actions {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
         }
-        .ad-placeholder {
-            margin: 20px auto;
+        .actions button {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+        .actions .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+        .actions .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .stat-item strong { color: var(--primary); }
+        
+        .error { color: var(--accent); margin-top: 10px; }
+        .loading {
+            display: none;
             text-align: center;
-            min-height: 90px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
+            padding: 20px;
+            color: #666;
         }
+        .loading.active { display: block; }
+        
         footer { text-align: center; color: white; padding: 20px; }
         
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; }
             .main-card { padding: 25px; }
             input[type="text"] { min-width: 100%; }
-            .language-buttons { justify-content: center; }
-            .lang-btn { padding: 10px 20px; font-size: 13px; }
         }
     </style>
 </head>
@@ -162,12 +154,12 @@
                 <label>🔗 Paste YouTube URL</label>
                 <div class="input-wrapper">
                     <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
-                    <button onclick="extractTranscript()">Extract Transcript</button>
+                    <button id="extractBtn" onclick="extractTranscript()">Extract Transcript</button>
                 </div>
             </div>
             
             <div class="language-section">
-                <div class="lang-label">Language of the video transcription</div>
+                <div class="lang-label">🌐 Language of the video transcription</div>
                 <div class="language-buttons">
                     <button class="lang-btn active" onclick="setLanguage('fr')" data-lang="fr">🇫🇷 FR</button>
                     <button class="lang-btn" onclick="setLanguage('en')" data-lang="en">🇬🇧 EN</button>
@@ -175,27 +167,33 @@
                 </div>
             </div>
             
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">⚡</div>
-                    <div>
-                        <h3>Instant</h3>
-                        <p>Get transcript in seconds</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔒</div>
-                    <div>
-                        <h3>No Signup</h3>
-                        <p>100% free, no registration</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📱</div>
-                    <div>
-                        <h3>Mobile Friendly</h3>
-                        <p>Works on all devices</p>
-                    </div>
-                </div>
+            <div class="loading" id="loading">
+                ⏳ Extraction en cours... Veuillez patienter (2-5 secondes)
             </div>
-            <div class="
+            
+            <div class="result-section" id="resultSection">
+                <label>📝 Transcript</label>
+                <textarea id="transcriptOutput" class="transcript-box" readonly></textarea>
+                
+                <div class="stats" id="stats">
+                    <div class="stat-item">Words: <strong id="wordCount">0</strong></div>
+                    <div class="stat-item">Chars: <strong id="charCount">0</strong></div>
+                    <div class="stat-item">Duration: <strong id="duration">0s</strong></div>
+                </div>
+                
+                <div class="actions">
+                    <button onclick="copyText()">📋 Copy</button>
+                    <button class="btn-secondary" onclick="downloadText()">💾 Download TXT</button>
+                    <button class="btn-success" onclick="downloadDoc()">📄 Download DOC</button>
+                    <button class="btn-secondary" onclick="getCleanText()">🧹 Clean (No timestamps)</button>
+                </div>
+                
+                <div class="error" id="errorMsg"></div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2026 YouTube Transcript Extractor - Free Online Tool</p>
+        </footer>
+    </div>
+

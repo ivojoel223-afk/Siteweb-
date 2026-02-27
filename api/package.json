@@ -1,0 +1,17 @@
+{
+  "name": "youtube-transcript-api",
+  "version": "1.0.0",
+  "description": "API pour extraire les transcripts YouTube",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "youtube-transcript": "^1.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
