@@ -1,6 +1,6 @@
 // 🎥 YouTube Transcript Extractor - NoTimeSub
 // API Backend URL (à remplacer par ton URL Render)
-const API_URL = 'https://yt-transcript-backend.onrender.com/api/transcript';
+const API_URL = 'https://youtube-transcript-api.onrender.com/api/transcript';
 
 let currentTranscript = '';
 let currentLanguage = 'fr';

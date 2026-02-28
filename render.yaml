@@ -1,13 +1,13 @@
 services:
   - type: web
     name: youtube-transcript-api
-    runtime: node
+    runtime: python
     region: frankfurt
     plan: free
     branch: main
     rootDir: api
-    buildCommand: npm install
-    startCommand: node index.js
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
     autoDeploy: true
     envVars:
       - key: NODE_ENV
